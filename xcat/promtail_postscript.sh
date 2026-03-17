@@ -11,11 +11,10 @@ set -euo pipefail
 # - Runs as root to read /var/log/messages
 # - Sends logs to Loki on master node
 # -----------------------------------------------------------------------------
-
 PROMTAIL_VERSION="3.5.6"
 PROMTAIL_BIN="/usr/bin/promtail"
+PROMTAIL_LOCAL_ZIP="/install/custom/software/promtail/${PROMTAIL_VERSION}/promtail-linux-amd64.zip"
 PROMTAIL_ZIP_URL="https://github.com/grafana/loki/releases/download/v${PROMTAIL_VERSION}/promtail-linux-amd64.zip"
-
 PROMTAIL_CONFIG_DIR="/etc/promtail"
 PROMTAIL_CONFIG_FILE="${PROMTAIL_CONFIG_DIR}/config.yml"
 PROMTAIL_POSITIONS_DIR="/var/lib/promtail"
