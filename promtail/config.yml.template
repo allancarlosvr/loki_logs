@@ -1,0 +1,52 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /var/lib/promtail/positions.yaml
+
+clients:
+  - url: http://dc1clu0005-mstr.vbr.is.keysight.com:3100/loki/api/v1/push
+
+scrape_configs:
+
+  - job_name: system
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: syslog
+          node: __NODE__
+          cluster: hpc-cluster
+          role: compute
+          __path__: /var/log/messages
+
+  - job_name: slurm
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: slurm
+          node: __NODE__
+          cluster: hpc-cluster
+          role: compute
+          __path__: /var/log/slurm/*.log
+
+  - job_name: kernel
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: kernel
+          node: __NODE__
+          cluster: hpc-cluster
+          role: compute
+          __path__: /var/log/dmesg
+
+  - job_name: journald
+    journal:
+      labels:
+        job: systemd-journal
+        node: __NODE__
+        cluster: hpc-cluster
+        role: compute
